@@ -13,6 +13,9 @@ HTTP Content-Type response header, and a pipeline description. Syntax is:
 
     build/gst-soup-server-example PORT CONTENT-TYPE <launch line>
 
+The launch line must have a final downstream element called "stream" with
+exactly one source pad, and this source pad must be unlinked.
+
 This example pipeline produces an h.264 stream, encapsulates it in MPEG-TS,
 and listens to port 14444 for HTTP GET requests:
 
@@ -32,3 +35,9 @@ pipeline is set back to the READY state.
 
 In case the pipeline encounters the EOS event, the pipeline is put to the
 READY state, and all connections are closed.
+
+NOTE: This example expects the user to specify a content MIME type. It is
+theoretically possible to extend the code to not need that, and instead figure
+out a MIME type based on the source GstCaps the "stream" element produces.
+However, this adds some complexity to the code, so in order to keep it simple,
+this was omitted.
