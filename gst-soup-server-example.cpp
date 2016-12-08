@@ -417,6 +417,8 @@ void http_request_handler(SoupServer *, SoupMessage *p_msg, char const *, GHashT
 		GIOStream *stream = soup_client_context_steal_connection(context_->m_client);
 
 		context_->m_pipeline->add_client(stream, socket);
+
+		delete context_;
 	};
 	g_signal_connect(G_OBJECT(p_msg), "wrote-headers", G_CALLBACK(wrote_headers_cb), context);
 }
